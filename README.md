@@ -1,3 +1,7 @@
+## Management System
+
+This project is for customer management web app using React and Node.js
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
