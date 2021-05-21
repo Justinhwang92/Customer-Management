@@ -20,31 +20,23 @@ const styles = (theme) => ({
   },
 });
 
-const customers = [
-  {
-    id: 1,
-    image: "https://placeimg.com/64/64/any",
-    name: "Justin",
-    email: "j@gmail.com",
-    phone: "111-111-1111",
-  },
-  {
-    id: 2,
-    image: "https://placeimg.com/64/64/any",
-    name: "Soon",
-    email: "s@gmail.com",
-    phone: "222-222-2222",
-  },
-  {
-    id: 3,
-    image: "https://placeimg.com/64/64/any",
-    name: "Kwon",
-    email: "k@gmail.com",
-    phone: "333-333-3333",
-  },
-];
-
 class App extends Component {
+  state = {
+    customers: "",
+  };
+
+  componentDidMount() {
+    this.callApi()
+      .then((res) => this.setState({ customers: res }))
+      .catch((error) => console.log(error));
+  }
+
+  callApi = async () => {
+    const response = await fetch("/api/customers");
+    const body = await response.json();
+    return body;
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -60,18 +52,21 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map((c) => {
-              return (
-                <Customer
-                  key={c.id}
-                  id={c.id}
-                  image={c.image}
-                  name={c.name}
-                  email={c.email}
-                  phone={c.phone}
-                />
-              );
-            })}
+            {/* Only when state does have values (when it runs first, state value should be empty) */}
+            {this.state.customers
+              ? this.state.customers.map((c) => {
+                  return (
+                    <Customer
+                      key={c.id}
+                      id={c.id}
+                      image={c.image}
+                      name={c.name}
+                      email={c.email}
+                      phone={c.phone}
+                    />
+                  );
+                })
+              : ""}
           </TableBody>
         </Table>
       </Paper>
