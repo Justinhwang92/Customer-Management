@@ -29,6 +29,13 @@ app.get("/api/customers", (req, res) => {
       email: "k@gmail.com",
       phone: "333-333-3333",
     },
+    {
+      id: 4,
+      image: "https://placeimg.com/64/64/any",
+      name: "Hwang",
+      email: "h@gmail.com",
+      phone: "444-444-4444",
+    },
   ]);
 });
 
