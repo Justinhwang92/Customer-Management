@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Customer from "./components/Customer";
+import CustomerAdd from "./components/CustomerAdd";
 import "./App.css";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -52,47 +53,50 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* when state does have values, show the data (when it runs first, state value should be empty)
-             otherwise, show the Circular progress (loding signs) */}
-            {this.state.customers ? (
-              this.state.customers.map((c) => {
-                return (
-                  <Customer
-                    key={c.id}
-                    id={c.id}
-                    image={c.image}
-                    name={c.name}
-                    email={c.email}
-                    phone={c.phone}
-                  />
-                );
-              })
-            ) : (
+      <div>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan="6" align="center">
-                  <CircularProgress
-                    className={classes.progress}
-                    variant="determinate"
-                    value={this.state.completed}
-                  />
-                </TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {/* when state does have values, show the data (when it runs first, state value should be empty)
+             otherwise, show the Circular progress (loding signs) */}
+              {this.state.customers ? (
+                this.state.customers.map((c) => {
+                  return (
+                    <Customer
+                      key={c.id}
+                      id={c.id}
+                      image={c.image}
+                      name={c.name}
+                      email={c.email}
+                      phone={c.phone}
+                    />
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    <CircularProgress
+                      className={classes.progress}
+                      variant="determinate"
+                      value={this.state.completed}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+        <CustomerAdd />
+      </div>
     );
   }
 }
