@@ -8,7 +8,7 @@ export class Customer extends React.Component {
       <TableRow>
         <TableCell>{this.props.id}</TableCell>
         <TableCell>
-          <img src={this.props.image} alt="profile picture" />
+          <img src={this.props.image} alt="profile" />
         </TableCell>
         <TableCell>{this.props.name}</TableCell>
         <TableCell>{this.props.email}</TableCell>

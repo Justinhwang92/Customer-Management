@@ -21,9 +21,35 @@ const connection = mysql.createConnection({
 // connect to mysql database
 connection.connect();
 
+// using multer library, sabe the image to the destination
+const multer = require("multer");
+const upload = multer({ dest: "./upload" });
+
 app.get("/api/customers", (req, res) => {
   connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
     res.send(rows);
+  });
+});
+
+// usres can access the image that uploded in the upload directory in the image directory
+app.use("/image", express.static("./upload"));
+
+app.post("/api/customers", upload.single("image"), (req, res) => {
+  let sql = "INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)"; // first one is id that automatically icreased
+
+  // get the values
+  let image = "/image/" + req.file.filename; // get the image path and name of the file
+  let name = req.body.name;
+  let email = req.body.email;
+  let phone = req.body.phone;
+
+  // binding values
+  let params = [image, name, email, phone];
+
+  // sending the values
+  connection.query(sql, params, (err, rows, fields) => {
+    res.send(rows);
+    console.log(err);
   });
 });
 

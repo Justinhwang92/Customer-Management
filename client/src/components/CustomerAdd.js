@@ -36,6 +36,16 @@ class CustomerAdd extends React.Component {
     this.addCustomer().then((response) => {
       console.log(response.data);
     });
+    // empty input box after hit summit button
+    this.setState({
+      file: null,
+      userName: "",
+      email: "",
+      phone: "",
+      fileName: ",",
+    });
+    // refresh the page
+    window.location.reload();
   };
 
   handleFileChange = (e) => {
