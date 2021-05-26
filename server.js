@@ -21,10 +21,12 @@ const connection = mysql.createConnection({
 // connect to mysql database
 connection.connect();
 
-// using multer library, sabe the image to the destination
+// using multer library, the image file name is prevented duplicates
 const multer = require("multer");
+// save the image to the destination
 const upload = multer({ dest: "./upload" });
 
+// get
 app.get("/api/customers", (req, res) => {
   connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
     res.send(rows);
@@ -32,8 +34,10 @@ app.get("/api/customers", (req, res) => {
 });
 
 // usres can access the image that uploded in the upload directory in the image directory
+// showing the directory as image, but real paht is uplodad (blocking user to see the real path)
 app.use("/image", express.static("./upload"));
 
+// save user submitted information to the database
 app.post("/api/customers", upload.single("image"), (req, res) => {
   let sql = "INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)"; // first one is id that automatically icreased
 
