@@ -35,6 +35,8 @@ class CustomerAdd extends React.Component {
     e.preventDefault();
     this.addCustomer().then((response) => {
       console.log(response.data);
+      // refresh states
+      this.props.stateRefresh();
     });
     // empty input box after hit summit button
     this.setState({
@@ -44,8 +46,8 @@ class CustomerAdd extends React.Component {
       phone: "",
       fileName: ",",
     });
-    // refresh the page
-    window.location.reload();
+    // refresh the whole page
+    // window.location.reload();
   };
 
   handleFileChange = (e) => {
