@@ -28,9 +28,12 @@ const upload = multer({ dest: "./upload" });
 
 // get
 app.get("/api/customers", (req, res) => {
-  connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
-    res.send(rows);
-  });
+  connection.query(
+    "SELECT * FROM CUSTOMER WHERE isDeleted = 0",
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  );
 });
 
 // usres can access the image that uploded in the upload directory in the image directory
@@ -39,7 +42,7 @@ app.use("/image", express.static("./upload"));
 
 // save user submitted information to the database
 app.post("/api/customers", upload.single("image"), (req, res) => {
-  let sql = "INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)"; // first one is id that automatically icreased
+  let sql = "INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, now(), 0)"; // first one is id that automatically icreased
 
   // get the values
   let image = "/image/" + req.file.filename; // get the image path and name of the file
@@ -54,6 +57,15 @@ app.post("/api/customers", upload.single("image"), (req, res) => {
   connection.query(sql, params, (err, rows, fields) => {
     res.send(rows);
     console.log(err);
+  });
+});
+
+app.delete("/api/customers/:id", (req, res) => {
+  // let database know this id is deleted
+  let sql = "UPDTE CUSTOMER SET isDeleted = 1 WHERE id = ?";
+  let params = [req.params.id];
+  connection.query(sql, params, (err, rows, fields) => {
+    res.send(rows);
   });
 });
 

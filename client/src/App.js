@@ -78,6 +78,7 @@ class App extends Component {
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone</TableCell>
+                <TableCell>Setting</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,6 +94,7 @@ class App extends Component {
                       name={c.name}
                       email={c.email}
                       phone={c.phone}
+                      stateRefresh={this.stateRefresh}
                     />
                   );
                 })
