@@ -116,6 +116,7 @@ class CustomerAdd extends React.Component {
               className={classes.hidden}
               accept="image/*"
               id="raised-button-file"
+              type="file"
               name="file"
               file={this.state.file}
               value={this.state.fileName}
